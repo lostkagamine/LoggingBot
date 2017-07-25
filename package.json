@@ -1,0 +1,27 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "a bot that logs stuff so you don't have t",
+  "main": "index.js",
+  "dependencies": {
+    "eris": "^0.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ry00000/Loggr.git"
+  },
+  "keywords": [
+    "Discord",
+    "bot"
+  ],
+  "author": "ry00001#3487, Devoxin#0387",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ry00000/Loggr/issues"
+  },
+  "homepage": "https://github.com/ry00000/Loggr#readme"
+}
