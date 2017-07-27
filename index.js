@@ -41,13 +41,10 @@ bot.on("message", msg => {
             embed.addField("Result", `\`\`\`\n${res}\`\`\``)
             msg.channel.send("", {embed: embed})
         }
-        if (cmd == "error-test") {
-            let embed = new Discord.RichEmbed().setColor(0xFF0000)
-            .setTitle("An error has occurred")
-            .setDescription("Unfortunately, an internal error occurred while processing your command.\nYou may report it here along with the full Error Details.")
-            .setURL("http://github.com/ry00000/LoggingBot/issues")
-            .addField("Error Details", `\`\`\`\n${e}\`\`\``)
-            .setFooter(msg.author.tag + " | " + new Date().toUTCString(), msg.author.displayAvatarURL)
+        if (cmd == "setup") {
+            if (!msg.member.hasPermission("MANAGE_GUILD")) {
+                msg.channel.send(":x: Invalid permissions.")
+            }
         }
         if (cmd == "ping") {
             msg.channel.send("Pong. `" + bot.ping + "ms`")

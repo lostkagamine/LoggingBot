@@ -61,4 +61,4 @@ typings/
 config.json
 
 # rethonkdb
-rethinkdb-data/
+rethinkdb_data/

@@ -38,3 +38,22 @@
 2017-07-27T15:22:41.087971800 1758.309311s notice: All client connections closed.
 2017-07-27T15:22:41.087971801 1758.309318s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
 2017-07-27T15:22:41.090966700 1758.311994s notice: Storage engine shut down.
+2017-07-27T15:23:28.532642500 0.015192s notice: Running rethinkdb 2.3.5-windows (MSC 190023506)...
+2017-07-27T15:23:28.534143400 0.016365s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-07-27T15:23:28.535142600 0.017583s notice: Loading data from directory C:\\Coding\\LoggingBotV2\\rethinkdb_data
+2017-07-27T15:23:28.603650700 0.086229s info: Automatically using cache size of 1204 MB
+2017-07-27T15:23:28.607652200 0.089945s notice: Listening for intracluster connections on port 29015
+2017-07-27T15:23:28.611653300 0.094006s notice: Listening for client driver connections on port 28015
+2017-07-27T15:23:28.612152900 0.094526s notice: Listening for administrative HTTP connections on port 8080
+2017-07-27T15:23:28.612152901 0.094534s notice: Listening on cluster address: 127.0.0.1
+2017-07-27T15:23:28.612152902 0.094541s notice: Listening on driver address: 127.0.0.1
+2017-07-27T15:23:28.612152903 0.094545s notice: Listening on http address: 127.0.0.1
+2017-07-27T15:23:28.612152904 0.094552s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-07-27T15:23:28.612152905 0.094560s notice: Server ready, "windows_gb2" 4aca0e84-5f6a-4121-8243-93c26419b30f
+2017-07-27T15:23:29.391105600 0.873618s notice: A newer version of the RethinkDB server is available: 2.3.6. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2017-07-27T15:32:02.969895000 514.452494s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: Starting a new Raft election for term 1.
+2017-07-27T15:32:02.970896800 514.453186s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: Added replica on this server.
+2017-07-27T15:32:03.021967600 514.504294s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: This server is Raft leader for term 1. Latest log index is 0.
+2017-07-27T15:32:05.769252100 517.251768s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: Starting a new Raft election for term 1.
+2017-07-27T15:32:05.770252400 517.252443s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: Added replica on this server.
+2017-07-27T15:32:05.812755900 517.295093s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: This server is Raft leader for term 1. Latest log index is 0.
