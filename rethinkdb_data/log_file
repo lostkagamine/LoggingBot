@@ -1,0 +1,40 @@
+2017-07-27T14:33:09.373465400 0.070456s notice: In recursion: removing file 'C:\\Coding\\LoggingBotV2\\rethinkdb_data\\tmp'
+2017-07-27T14:33:09.376463700 0.073515s warn: Trying to delete non-existent file 'C:\\Coding\\LoggingBotV2\\rethinkdb_data\\tmp'
+2017-07-27T14:33:09.378966400 0.075636s notice: Initializing directory C:\\Coding\\LoggingBotV2\\rethinkdb_data
+2017-07-27T14:33:09.379965200 0.077016s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory 'C:\\Coding\\LoggingBotV2\\rethinkdb_data' did not already exist or is empty.)
+2017-07-27T14:33:09.380465800 0.077247s notice: Running rethinkdb 2.3.5-windows (MSC 190023506)...
+2017-07-27T14:33:09.380465801 0.077529s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-07-27T14:33:09.380964900 0.077592s notice: Loading data from directory C:\\Coding\\LoggingBotV2\\rethinkdb_data
+2017-07-27T14:33:10.020064500 0.717053s info: Automatically using cache size of 1253 MB
+2017-07-27T14:33:10.094575100 0.791149s notice: Listening for intracluster connections on port 29015
+2017-07-27T14:33:10.120578200 0.817533s notice: Listening for client driver connections on port 28015
+2017-07-27T14:33:10.121077300 0.817908s notice: Listening for administrative HTTP connections on port 8080
+2017-07-27T14:33:10.121077301 0.817913s notice: Listening on cluster address: 127.0.0.1
+2017-07-27T14:33:10.121077302 0.817919s notice: Listening on driver address: 127.0.0.1
+2017-07-27T14:33:10.121077303 0.817922s notice: Listening on http address: 127.0.0.1
+2017-07-27T14:33:10.121077304 0.817928s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-07-27T14:33:10.121077305 0.817933s notice: Server ready, "windows_gb2" 4aca0e84-5f6a-4121-8243-93c26419b30f
+2017-07-27T14:33:10.774660700 1.471375s notice: A newer version of the RethinkDB server is available: 2.3.6. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2017-07-27T14:35:54.963794300 165.660853s notice: Server got Control-C; shutting down...
+2017-07-27T14:35:54.977012400 165.673689s notice: Shutting down client connections...
+2017-07-27T14:35:54.977012401 165.673837s notice: All client connections closed.
+2017-07-27T14:35:54.977012402 165.673843s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-07-27T14:35:55.032206000 165.729207s notice: Storage engine shut down.
+2017-07-27T14:53:22.852625200 0.073905s notice: Running rethinkdb 2.3.5-windows (MSC 190023506)...
+2017-07-27T14:53:22.863627100 0.084639s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-07-27T14:53:22.865128500 0.086155s notice: Loading data from directory C:\\Coding\\LoggingBotV2\\rethinkdb_data
+2017-07-27T14:53:22.922133400 0.143165s info: Automatically using cache size of 1288 MB
+2017-07-27T14:53:22.924134500 0.145358s notice: Listening for intracluster connections on port 29015
+2017-07-27T14:53:22.927134800 0.148296s notice: Listening for client driver connections on port 28015
+2017-07-27T14:53:22.927634900 0.148902s notice: Listening for administrative HTTP connections on port 8080
+2017-07-27T14:53:22.927634901 0.148911s notice: Listening on cluster address: 127.0.0.1
+2017-07-27T14:53:22.927634902 0.148919s notice: Listening on driver address: 127.0.0.1
+2017-07-27T14:53:22.927634903 0.148921s notice: Listening on http address: 127.0.0.1
+2017-07-27T14:53:22.927634904 0.148930s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-07-27T14:53:22.927634905 0.148940s notice: Server ready, "windows_gb2" 4aca0e84-5f6a-4121-8243-93c26419b30f
+2017-07-27T14:53:23.526593800 0.747835s notice: A newer version of the RethinkDB server is available: 2.3.6. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2017-07-27T15:22:41.084965600 1758.306163s notice: Server got Control-C; shutting down...
+2017-07-27T15:22:41.085465700 1758.306797s notice: Shutting down client connections...
+2017-07-27T15:22:41.087971800 1758.309311s notice: All client connections closed.
+2017-07-27T15:22:41.087971801 1758.309318s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-07-27T15:22:41.090966700 1758.311994s notice: Storage engine shut down.

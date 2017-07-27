@@ -1,10 +1,12 @@
 {
-  "name": "logger",
+  "name": "loggingbot2",
   "version": "1.0.0",
-  "description": "a bot that logs stuff so you don't have t",
+  "description": "a bot that logs stuff so you don't have to.",
   "main": "index.js",
   "dependencies": {
-    "eris": "^0.7.0"
+    "discord.js": "^11.1.0",
+    "rethinkdb": "^2.3.3",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {},
   "scripts": {
@@ -12,16 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ry00000/Loggr.git"
+    "url": "git+ssh://git@github.com/ry00000/LoggingBot.git"
   },
   "keywords": [
     "Discord",
     "bot"
   ],
-  "author": "ry00001#3487, Devoxin#0387",
+  "author": "ry00001#3487",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ry00000/Loggr/issues"
+    "url": "https://github.com/ry00000/LoggingBot/issues"
   },
-  "homepage": "https://github.com/ry00000/Loggr#readme"
+  "homepage": "https://github.com/ry00000/LoggingBot#readme"
 }
