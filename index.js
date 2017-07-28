@@ -45,9 +45,26 @@ bot.on("message", msg => {
             if (!msg.member.hasPermission("MANAGE_GUILD")) {
                 msg.channel.send(":x: Invalid permissions.")
             }
+            let filter = m => m.mentions.channels.first() && m.author.id == msg.author.id && m.channel.id == msg.channel.id
+            msg.channel.send("Mention the channel where the mod log will go.")
+            msg.channel.awaitMessages(filter, {max: 1, time:10000, errors:["time"]})
+            .then(a => {
+                try {
+                    r.db("loggingbot2").table("guilds").insert({
+                        gid: msg.guild.id,
+                        channel: a.first().mentions.channels.first().id
+                    }).run(conn)
+                    console.log(r.db("loggingbot2").table("guilds").filter(a => a.gid == msg.guild.id).run(conn))
+                } catch (e) {
+                    return msg.channel.send(":x: Unable to insert into database. This is a bug! Report at http://github.com/ry00000/LoggingBot/issues \n\nError details: ```\n" + e + "```")
+                }
+                msg.channel.send(":ok_hand:")
+            }).catch(e => { 
+                msg.channel.send("Cancelled")
+            })
         }
         if (cmd == "ping") {
-            msg.channel.send("Pong. `" + bot.ping + "ms`")
+            msg.channel.send("Pong. `" + Math.floor(bot.ping) + "ms`")
         }
     } catch(e) {
         let embed = new Discord.RichEmbed().setColor(0xFF0000)
@@ -59,23 +76,19 @@ bot.on("message", msg => {
     }
 })
 
-function connectRethink() {
-    console.log("RethinkDB connecting")
-    r.connect({
-        host: config.rethinkdb.host,
-        port: config.rethinkdb.port,
-        db: config.rethinkdb.db,
-        user: config.rethinkdb.user,
-        password: config.rethinkdb.password
-    }).then(c => {
-        console.log("RethinkDB connected")
-        const conn = c
-    }).catch(e => {
-        console.log("RethinkDB connection failed!\n" + e)
-        p.exit(1)
-    })
-}
-
-connectRethink()
+console.log("RethinkDB connecting")
+r.connect({
+    host: config.rethinkdb.host,
+    port: config.rethinkdb.port,
+    db: config.rethinkdb.db,
+    user: config.rethinkdb.user,
+    password: config.rethinkdb.password
+}).then(c => {
+    console.log("RethinkDB connected")
+    const conn = c
+}).catch(e => {
+    console.log("RethinkDB connection failed!\n" + e)
+    p.exit(1)
+})
 
 bot.login(config.token)
