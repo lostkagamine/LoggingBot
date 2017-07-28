@@ -76,6 +76,8 @@ bot.on("message", msg => {
     }
 })
 
+var conn
+
 console.log("RethinkDB connecting")
 r.connect({
     host: config.rethinkdb.host,
@@ -85,7 +87,7 @@ r.connect({
     password: config.rethinkdb.password
 }).then(c => {
     console.log("RethinkDB connected")
-    const conn = c
+    conn = c
 }).catch(e => {
     console.log("RethinkDB connection failed!\n" + e)
     p.exit(1)
