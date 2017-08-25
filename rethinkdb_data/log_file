@@ -171,3 +171,19 @@
 2017-08-24T16:23:29.517681900 1.572160s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: This server is Raft leader for term 7. Latest log index is 18.
 2017-08-24T16:23:29.711693100 1.765522s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: Starting a new Raft election for term 7.
 2017-08-24T16:23:29.749695900 1.803473s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: This server is Raft leader for term 7. Latest log index is 20.
+2017-08-25T20:10:42.412697900 0.034982s notice: Running rethinkdb 2.3.6-windows (MSC 190024215)...
+2017-08-25T20:10:42.426698700 0.048191s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-08-25T20:10:42.426698701 0.048286s notice: Loading data from directory C:\\Coding\\LoggingBotV2\\rethinkdb_data
+2017-08-25T20:10:42.533704300 0.156043s info: Automatically using cache size of 1534 MB
+2017-08-25T20:10:42.536704100 0.158214s notice: Listening for intracluster connections on port 29015
+2017-08-25T20:10:42.799718500 0.421360s notice: Listening for client driver connections on port 28015
+2017-08-25T20:10:42.799718501 0.421696s notice: Listening for administrative HTTP connections on port 8080
+2017-08-25T20:10:42.799718502 0.421701s notice: Listening on cluster address: 127.0.0.1
+2017-08-25T20:10:42.799718503 0.421705s notice: Listening on driver address: 127.0.0.1
+2017-08-25T20:10:42.799718504 0.421726s notice: Listening on http address: 127.0.0.1
+2017-08-25T20:10:42.799718505 0.421729s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-08-25T20:10:42.799718506 0.421732s notice: Server ready, "windows_gb2" 4aca0e84-5f6a-4121-8243-93c26419b30f
+2017-08-25T20:10:44.058789900 1.680273s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: Starting a new Raft election for term 8.
+2017-08-25T20:10:44.077793500 1.699548s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: Starting a new Raft election for term 8.
+2017-08-25T20:10:44.140795700 1.762383s info: Table d92a46f8-dc46-4072-9921-4955fabe2815: This server is Raft leader for term 8. Latest log index is 21.
+2017-08-25T20:10:44.183799300 1.805668s info: Table 5b5c0c06-ebfe-4f1b-a714-5f2be421fbda: This server is Raft leader for term 8. Latest log index is 23.

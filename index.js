@@ -29,8 +29,10 @@ bot.on("guildBanAdd", (g, u) => {
         console.log(a)
         r.table('guilds').filter({gid: g.id}).run(conn).then(obj => {
             obj = obj.next().then(aaa => {
-                g.fetchAuditLogs({limit:10}).then(audit => {
+                g.fetchAuditLogs({limit:10, type:'ban'}).then(audit => {
                     // console.log(util.inspect(audit))
+                    let mod = audit.entries.first().executor
+                    let modinfo = {username: mod.username, discrim: mod.discriminator, tag: mod.tag, id: mod.id}
                     let embed = new Discord.RichEmbed(
                         {
                             color: embeds['ban']['color'],
@@ -38,15 +40,23 @@ bot.on("guildBanAdd", (g, u) => {
                             description: `Case ${a}`
                         }
                     )
-                    .addField('Moderator', audit.entries.first().executor.tag)
+                    .addField('Moderator', mod.tag)
                     // .setDescription(`Case ${a}`)
                     .addField('Target', `**${u.username}**#${u.discriminator} (${u.id})`)
                     if (audit.entries.first().reason) { embed.addField('Reason', `${audit.entries.first().reason}`, false)} else {
-                        embed.addField('Reason', `Responsible mod, type \`${prefix}reason ${a} <reason>\` to set a reason.`, false)
+                        embed.addField('Reason', `${mod}, type \`${prefix}reason ${a} <reason>\` to set a reason.`, false)
                     }
                     reason = audit.entries.first().reason ? audit.entries.first().reason : 'none'
                     g.channels.get(aaa.channel).send('', {embed: embed}).then(message => {
-                        r.table("cases").insert({type: 'ban', gid: g.id, target: {id: u.id, tag: u.tag, username: u.username, discrim: u.discriminator}, case_id: a, reason: reason, msgid: message.id}).run(conn)
+                        r.table("cases").insert({
+                            type: 'ban',
+                            gid: g.id,
+                            target: {id: u.id, tag: u.tag, username: u.username, discrim: u.discriminator},
+                            mod: modinfo,
+                            ogmod: modinfo,
+                            case_id: a, reason: reason,
+                            msgid: message.id
+                        }).run(conn)
                     })
                     delete(embed)
                 })
@@ -116,7 +126,8 @@ bot.on("message", msg => {
                 try {
                     r.table("cases").filter({gid: msg.guild.id}).count().run(conn).then(caseid => {
                         reason = args.slice(1).join(' ')
-                        r.table('cases').filter({gid: msg.guild.id, case_id: caseid}).replace({reason: reason}).run(conn)
+                        let modinfo = {username: msg.author.username, discrim: msg.author.discriminator, tag: msg.author.tag, id: msg.author.id}
+                        r.table('cases').filter({gid: msg.guild.id, case_id: caseid}).replace({reason: reason, mod: modinfo}).run(conn)
                         r.table('guilds').filter({gid: msg.guild.id}).run(conn).then(obj => {
                             obj.next().then(rdbg => {
                                 r.table('cases').filter({gid: msg.guild.id, case_id: caseid - 1}).run(conn).then(a => a.next().then(a => {
