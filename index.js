@@ -12,31 +12,41 @@ const config = require("./config.json")
 const p = require("process")
 const c_p = require("child_process")
 const util = require('util')
-const prefix = "!"
+const prefix = "l!"
 const bot = new Discord.Client()
 const embeds = {
     "ban": {
         "color": 0xFF0000,
         "title": "Member Banned"
+    },
+    "unban": {
+        "color": 0x5555FF,
+        "title": "Member Unbanned"
+    },
+    "kick": {
+        "color": 0xFFA500,
+        "title": "Member Kicked"
     }
 }
 bot.on("ready", ()=> {
     console.log(`LoggingBot II connected to Discord.\nLogged in as ${bot.user.username}#${bot.user.discriminator} (${bot.user.id})`)
 })
 
-bot.on("guildBanAdd", (g, u) => {
+function doLoggingEmbed(type, g, u) {
     let caseid = r.table("cases").filter({gid: g.id}).count().run(conn).then(a => {
         console.log(a)
+        a = a + 1
         r.table('guilds').filter({gid: g.id}).run(conn).then(obj => {
             obj = obj.next().then(aaa => {
-                g.fetchAuditLogs({limit:10, type:'ban'}).then(audit => {
+                g.fetchAuditLogs({limit:10, type:type}).then(audit => {
+                    if (u instanceof Discord.GuildMember) u = u.user
                     // console.log(util.inspect(audit))
                     let mod = audit.entries.first().executor
                     let modinfo = {username: mod.username, discrim: mod.discriminator, tag: mod.tag, id: mod.id}
                     let embed = new Discord.RichEmbed(
                         {
-                            color: embeds['ban']['color'],
-                            title: embeds['ban']['title'],
+                            color: embeds[type]['color'],
+                            title: embeds[type]['title'],
                             description: `Case ${a}`
                         }
                     )
@@ -49,12 +59,13 @@ bot.on("guildBanAdd", (g, u) => {
                     reason = audit.entries.first().reason ? audit.entries.first().reason : 'none'
                     g.channels.get(aaa.channel).send('', {embed: embed}).then(message => {
                         r.table("cases").insert({
-                            type: 'ban',
+                            type: type,
                             gid: g.id,
                             target: {id: u.id, tag: u.tag, username: u.username, discrim: u.discriminator},
                             mod: modinfo,
                             ogmod: modinfo,
-                            case_id: a, reason: reason,
+                            case_id: a,
+                            reason: reason,
                             msgid: message.id
                         }).run(conn)
                     })
@@ -62,6 +73,24 @@ bot.on("guildBanAdd", (g, u) => {
                 })
             })
         })
+    })
+}
+
+bot.on("guildBanAdd", (g, u) => {
+    doLoggingEmbed('ban', g, u)
+})
+
+bot.on("guildBanRemove", (g, u) => {
+    doLoggingEmbed('unban', g, u)
+})
+
+bot.on('guildMemberRemove', u => {
+    u.guild.fetchAuditLogs({limit: 10, type: 'kick'}).then(audit => {
+        audit = audit.entries.first()
+        // console.log(util.inspect(audit))
+        if (audit.action == 'MEMBER_KICK' && audit.target == u.user) {
+            doLoggingEmbed('kick', u.guild, u)
+        }
     })
 })
 
@@ -121,39 +150,53 @@ bot.on("message", msg => {
             3/0
         }
         if (cmd == "reason") {
-            if (args[0] == "|") {
-                if (!msg.member.hasPermission("MANAGE_ROLES")) { return msg.channel.send(':x: Invalid permissions.')}
-                try {
-                    r.table("cases").filter({gid: msg.guild.id}).count().run(conn).then(caseid => {
-                        reason = args.slice(1).join(' ')
-                        let modinfo = {username: msg.author.username, discrim: msg.author.discriminator, tag: msg.author.tag, id: msg.author.id}
-                        r.table('cases').filter({gid: msg.guild.id, case_id: caseid}).replace({reason: reason, mod: modinfo}).run(conn)
-                        r.table('guilds').filter({gid: msg.guild.id}).run(conn).then(obj => {
-                            obj.next().then(rdbg => {
-                                r.table('cases').filter({gid: msg.guild.id, case_id: caseid - 1}).run(conn).then(a => a.next().then(a => {
-                                        msg.guild.channels.get(rdbg.channel).fetchMessages({limit: 1, around: a.msgid}).then(m =>{ 
-                                            // console.log(util.inspect(a))
-                                            let embed = new Discord.RichEmbed(
-                                                {
-                                                    color: embeds['ban']['color'],
-                                                    title: embeds['ban']['title'],
-                                                    description: `Case ${caseid}`
-                                                }
-                                            )
-                                            embed.addField('Moderator', msg.author.tag, false)
-                                            embed.addField('Target', `**${a.target.username}**#${a.target.discrim} (${a.target.id})`, false)
-                                            embed.addField('Reason', reason, false)
-                                            m.first().edit('', {embed: embed})
-                                        })
-                                    }))
+            let caseno
+            caseno = parseInt(args[0])
+            if (isNaN(caseno)) {
+                return msg.channel.send(':x: Not a valid number.')
+            }
+            if (!msg.member.hasPermission("MANAGE_ROLES")) { return msg.channel.send(':x: Invalid permissions.')}
+            try {
+                reason = args.slice(1).join(' ')
+                let modinfo = {username: msg.author.username, discrim: msg.author.discriminator, tag: msg.author.tag, id: msg.author.id}
+                r.table('cases').filter({gid: msg.guild.id, case_id: caseno}).replace({reason: reason, mod: modinfo}).run(conn)
+                r.table('guilds').filter({gid: msg.guild.id}).run(conn).then(obj => {
+                    obj.next().then(rdbg => {
+                        r.table('cases').filter({gid: msg.guild.id, case_id: caseno - 1}).run(conn).then(a => a.next().then(a => {
+                                msg.guild.channels.get(rdbg.channel).fetchMessages({limit: 1, around: a.msgid}).then(m =>{ 
+                                    // console.log(util.inspect(a))
+                                    let embed = new Discord.RichEmbed(
+                                        {
+                                            color: embeds[a.type]['color'],
+                                            title: embeds[a.type]['title'],
+                                            description: `Case ${caseno}`
+                                        }
+                                    )
+                                    embed.addField('Moderator', msg.author.tag, false)
+                                    embed.addField('Target', `**${a.target.username}**#${a.target.discrim} (${a.target.id})`, false)
+                                    embed.addField('Reason', reason, false)
+                                    m.first().edit('', {embed: embed})
                                 })
-                            })
+                            }))
                         })
-                } catch (e) {
-                    console.log(e)
-                }
+                    })
+            } catch (e) {
+                console.log(e)
             }
         }
+    if (cmd == 'resetCases') {
+        if (msg.author.id != config.owner) return msg.channel.send(':no_entry_sign: You can\'t do this.')
+        msg.channel.send('Are you sure you want to do this? This is **irreversible** and will delete ***everything!***\n\nType `Yes, delete everything.` to confirm. (10 seconds)')
+        let filter = m => m.content == 'Yes, delete everything.' && m.channel == msg.channel && m.author == msg.author
+        msg.channel.awaitMessages(filter, {max: 1, time: 10000})
+        .then(e => {
+            r.table('cases').delete().run(conn)
+            msg.channel.send('Everything was deleted...')
+        })
+        .catch(() => {
+            msg.channel.send('Cancelled. Phew...')
+        })
+    }
     } catch(e) {
         let embed = new Discord.RichEmbed().setColor(0xFF0000)
         .setTitle("An error has occurred")
